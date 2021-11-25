@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'variables';
+@import '~sweetalert2/dist/sweetalert2';
+@import 'elements/brand';
+@import 'elements/card';
+@import 'elements/navbar';
+@import 'elements/buttons';
+@import 'elements/transitions';
+@import 'components/server-error';
+@import '@vueform/multiselect/themes/default.css';
+
+@layer base {
+    body {
+        font-family: 'DM Sans', sans-serif;
+    }
+    .content-height{
+        min-height: calc(100vh - 132px);
+    }
+}
+
+@layer components {
+
+    .page-heading{
+        @apply font-medium text-xl text-gray-900 dark:text-gray-200;
+    }
+    .box-heading {
+        @apply text-gray-700 dark:text-gray-200 text-lg font-medium;
+    }
+    .button-primary{
+        @apply text-sm rounded shadow inline-flex items-center bg-indigo-500 focus:outline-none text-white py-2.5 px-3 md:py-3 md:px-4
+    }
+    .input-field{
+        @apply mt-1 p-3 block w-full shadow-sm sm:text-sm border border-gray-300 focus:outline-none focus:border-indigo-500 rounded text-gray-600 text-sm dark:text-gray-200 dark:bg-gray-800 dark:border-gray-700 tracking-wide;
+    }
+    .input-label {
+        @apply text-gray-700 dark:text-gray-200 font-medium capitalize;
+    }
+    .action-btn-item{
+        @apply px-4 py-2 flex items-center capitalize font-medium text-sm tracking-wide hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100 hover:text-gray-900 transition-all duration-300 ease-in-out;
+    }
+    .action-subitem{
+        @apply text-left text-gray-500 rounded bg-white shadow-2xl absolute z-20 right-0 w-32 mt-2 py-2 -mt-10 mr-12 border border-gray-100 dark:bg-gray-900 dark:border-gray-700;
+    }
+    .btn-trash {
+        @apply rounded shadow-sm inline-flex items-center bg-white dark:bg-gray-900 hover:text-indigo-500 focus:outline-none focus:border-indigo-200  text-gray-500 py-2 px-2 md:px-3 mr-2
+    }
+    .search{
+        @apply flex-1 absolute bottom-0 md:relative w-full md:w-1/4 focus-within:border-blue-500;
+    }
+    .tr {
+        @apply bg-gray-50 dark:bg-gray-900 sticky top-0 border-b border-r border-gray-200 dark:border-gray-800 text-center px-6 py-4 text-gray-500 dark:text-gray-200 font-semibold uppercase text-sm tracking-wider;
+    }
+    .td{
+        @apply border border-t border-r border-gray-100 dark:border-gray-700 py-3 px-3 text-center text-gray-500 dark:text-gray-400
+    }
+    .badge{
+        @apply inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 rounded-full;
+    }
+    
+}

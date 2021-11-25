@@ -1,0 +1,177 @@
+// Bg Colors css
+
+.bg-body {
+    background-color: rgba(241,245,251, $tw-bg-opacity);
+}
+.bg-brand-tailwind {
+    background-color: rgba(24,185,209, $tw-bg-opacity);
+}
+.bg-brand-section-light {
+    background-color: rgba(246,250,255, $tw-bg-opacity);
+}
+.bg-brand-indigo-light {
+    background-color: rgba(55,88,249,.2);
+}
+.bg-brand-blue {
+    background-color: rgba(55,88,249, $tw-bg-opacity);
+}
+
+
+
+// Text colors Colors Css
+.text-body {
+    color: rgba(13,23,42, $tw-text-opacity);
+}
+.text-blueGray-600 {
+    color: rgba(71,85,105, $tw-text-opacity);
+}
+.text-brand-indigo-dark {
+    color: rgba(55,88,249, $tw-text-opacity);
+}
+
+
+// nav active css
+.navbar-menu .router-link-active {
+    background: #6366f1;
+    color: #fff !important;
+}
+
+.navbar-menu .router-link-active svg{
+    color: #fff !important;
+}
+
+.navbar-menu .router-link-active:hover svg ,
+.navbar-menu .router-link-active:hover span{
+    color: #fff !important;
+}
+
+// Others Css
+.shadow-button {
+    box-shadow: $tw-ring-offset-shadow,0 0 #0000, $tw-ring-shadow,0 0 #0000, $tw-shadow;
+}
+.rounded-4xl {
+    border-radius: 4rem;
+}
+.shadow-circle {
+    box-shadow: $tw-ring-offset-shadow, 0 0 #0000, $tw-ring-shadow,0 0 #0000, $tw-shadow;
+}
+
+// error
+.is-invalid {
+    border: 1px solid #db2777;
+}
+
+// Override Sweet Alert Toaster Style
+.swal2-popup.swal2-toast .swal2-title{
+    margin-left: 0 !important;
+}
+.swal2-toast.swal2-icon-error {
+    background: #EF4470 !important;
+}
+.swal2-popup.swal2-toast .swal2-title{
+    color: #fff;
+}
+.swal2-toast .swal2-icon.swal2-error {
+    background-color: #b70e3a !important;
+}
+.swal2-toast .swal2-icon.swal2-error {
+    border-color: #b70e3a !important;
+}
+.swal2-toast.swal2-icon-success {
+    background: #34D399 !important;
+}
+.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+    border: 0.25em solid #059669 !important;
+}
+.swal2-toast .swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #059669 !important;
+}
+.swal2-cancel.swal2-styled {
+    background-color: #ed64a6 !important;
+}
+
+
+
+// scrollbar css
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #edf2f7;
+}
+
+.dark ::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #000;
+}
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 80vh;
+    border: 3px solid #edf2f7;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #1F2937;
+    border: 3px solid rgb(13, 20, 27);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+
+// activity log
+.activity-logs-p strong{
+    color: #6366f1;
+    text-transform: capitalize;
+}
+
+
+// Multi select
+.multiselect-tag.is-user {
+    padding: 5px 8px;
+    border-radius: 22px;
+    background: #6366f1;
+    margin: 3px 3px 8px;
+}
+
+.multiselect-tag.is-user img {
+    width: 18px;
+    border-radius: 50%;
+    height: 18px;
+    margin-right: 8px;
+    border: 2px solid #ffffffbf;
+}
+
+.multiselect-tag.is-user i:before {
+    color: #ffffff;
+    border-radius: 50%;;
+}
+
+.user-image {
+    margin: 0 6px 0 0;
+    border-radius: 50%;
+    height: 22px;
+}
+
+.dark input.multiselect-tags-search {
+    background: #374151;
+}
+
+.multiselect-tag {
+    background: #6366f1;
+}
+
+
+@media only screen and (max-width:1024px) {
+    .nav-items{
+        overflow: auto;
+    }
+}
