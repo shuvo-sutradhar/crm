@@ -6,7 +6,7 @@
           <div>
             <h2 class="text-2xl font-semibold">Good morning,<br> Mr. Jon Doe</h2>
             <h4 class="text-xl text-gray-300 mt-4">Welcome to your dashboard</h4>
-            <button @click="open('punchIn')" class="button-primary mt-6 bg-white text-gray-800 font-bold">
+            <button class="button-primary mt-6 bg-white text-gray-800 font-bold">
               <icon name="finger-print" classList="text-gray-500 w-6 h-6 mr-1" />
               Punch In
             </button>
@@ -42,25 +42,16 @@
      
       </div>
     </div>
-
-
-    <punch-in />
   </div>
 </template>
 
 <script>
 import Clock from 'vue-clock2';
-import PunchIn from '~/components/attandance/punchIn'
 // import axios from 'axios'
 export default {
   layout: 'dashboard',
   middleware: 'auth',
-
-  components: {
-    Clock,
-    PunchIn
-  },
-
+  components: { Clock },
 
   
     IconmetaInfo () {
@@ -69,17 +60,6 @@ export default {
 
   data: () => ({
   }),
-
-  methods: {
-
-    // punch in-out modal
-    open(name) {
-        this.$store.dispatch("modals/open", name);
-        // if(tag!=null){
-        //     this.$store.state.tag.tagSlug=tag;
-        // }
-    },
-  }
 
 }
 </script>

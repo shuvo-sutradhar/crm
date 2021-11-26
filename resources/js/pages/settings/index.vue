@@ -59,16 +59,70 @@ export default {
         btnName: 'change-settings'
       },
       {
-        title: 'payment',
+        title: 'department',
         details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
-        icon: 'credit-card',
-        routeName: '',
+        icon: 'tag',
+        routeName: 'department.index',
         color: 'text-pink-500',
         bg: 'bg-pink-200',
         btnName: 'change-settings'
       },
       {
-        title: 'orders',
+        title: 'designation',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'pdf',
+        routeName: 'designation.index',
+        color: 'text-green-500',
+        bg: 'bg-green-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'role-permission',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'lock-open',
+        routeName: 'role.index',
+        color: 'text-purple-500',
+        bg: 'bg-purple-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'holiday',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'pdf',
+        routeName: '',
+        color: 'text-green-500',
+        bg: 'bg-green-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'leave_settings',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'pdf',
+        routeName: 'leave-settings.index',
+        color: 'text-red-500',
+        bg: 'bg-red-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'attandance',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'pdf',
+        routeName: '',
+        color: 'text-green-500',
+        bg: 'bg-green-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'payroll',
+        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
+        icon: 'pdf',
+        routeName: '',
+        color: 'text-green-500',
+        bg: 'bg-green-200',
+        btnName: 'change-settings'
+      },
+      {
+        title: 'org_structure',
         details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
         icon: 'pdf',
         routeName: '',
@@ -84,15 +138,6 @@ export default {
         color: 'text-red-500',
         bg: 'bg-red-200',
         btnName: 'view_detials'
-      },
-      {
-        title: 'role-permission',
-        details: 'Set your brand name and colors, upload your logo, connect your domain. and make your business more easier.',
-        icon: 'lock-open',
-        routeName: 'role.index',
-        color: 'text-purple-500',
-        bg: 'bg-purple-200',
-        btnName: 'change-settings'
       },
       {
         title: 'tag',

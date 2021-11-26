@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Modal from './Modal'
 import Card from './Card.vue'
 import Iocn from './Icon.vue'
 import Search from './Search'
@@ -14,6 +15,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform/components/bootstrap5'
 
 // Components that are registered globaly.
 [
+  Modal,
   Card,
   Iocn,
   Search,

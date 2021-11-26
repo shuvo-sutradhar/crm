@@ -18,7 +18,7 @@
 
       <!-- footer -->
       <footer class="flex justify-between items-center bg-white dark:bg-gray-900 p-4 shadow text-xs text-gray-500">
-        <div>COPYRIGHT &copy; {{new Date().getFullYear()}} Codeshaper </div>
+        <div>COPYRIGHT &copy; {{ new Date().getFullYear() }} Codeshaper </div>
         <div class="flex items-center">Hand-crafted & Made with <icon name="love" /></div>
       </footer>
     </div>

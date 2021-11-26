@@ -13,6 +13,16 @@ export default [
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
   { path: '/home', name: 'home', component: page('home.vue') },
 
+  //  My desk route
+  { path: '/my-desk', name: 'my-desk.index', component: page('myDesk/index.vue') },
+
+  //  Department route
+  { path: '/settings/department', name: 'department.index', component: page('settings/department/index.vue') },
+  //  Designation route
+  { path: '/settings/designation', name: 'designation.index', component: page('settings/designation/index.vue') },
+  //  Designation route
+  { path: '/settings/leave-settings', name: 'leave-settings.index', component: page('settings/leave-settings/index.vue') },
+
 
   //settings Route
   { path: '/settings', name: 'settings.index', component: page('settings/index.vue') },

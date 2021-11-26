@@ -72,6 +72,12 @@ export default {
                         route: 'home',
                         icon: 'dashboard',
                         permission: 'dashboard-view'
+                    },
+                    {
+                        title: 'my_desk',
+                        route: 'my-desk.index',
+                        icon: 'collection',
+                        permission: 'dashboard-view'
                     }
                 ]
             },

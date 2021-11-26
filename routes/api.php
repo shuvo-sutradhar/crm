@@ -9,7 +9,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\API\ActivityController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\PermissionController;
+use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Settings\PasswordController;
@@ -44,11 +46,27 @@ Route::group(['middleware' => 'auth:api'], function () {
 
  
     /*
-    *   Role and permission Controller
+    *   team Controller
     */
     Route::apiResource('team', TeamController::class);
     Route::post('/team/delete-selected', [TeamController::class, 'delete_teams']);
     Route::get('/team-search/{query}', [TeamController::class, 'search']);
+
+
+    /*
+    *   Department Controller
+    */
+    Route::apiResource('department', DepartmentController::class);
+    Route::post('/delete-departments', [DepartmentController::class, 'deleteDepts']);
+    Route::get('/department-search/{query}', [DepartmentController::class, 'search']);
+
+
+    /*
+    *   Designation Controller
+    */
+    Route::apiResource('designation', DesignationController::class);
+    Route::post('/delete-designations', [DesignationController::class, 'deleteDepts']);
+    Route::get('/designation-search/{query}', [DesignationController::class, 'search']);
 
 
     /*

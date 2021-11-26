@@ -38,7 +38,7 @@
   "verify_email_address": "We sent you an email with an the verification link.",
   "main":"Main",
   "dashboard":"Dashboard",
-  "orders":"Orders",
+  "designation":"Designation",
   "clients":"Client",
   "ticket":"Ticket",
   "invoices":"Invoices",
@@ -54,7 +54,13 @@
   "cupons":"Cupons",
   "cupon":"Cupon",
   "company-setings": "Company Settings",
-  "payment": "Payment",
+  "department": "Department",
+  "holiday": "Holiday",
+  "leave": "leave",
+  "leave_settings": "Leave settings",
+  "attandance": "Attandance",
+  "payroll": "Payroll",
+  "org_structure": "Orginatio Strucure",
   "team": "Team",
   "team_create": "Create team member",
   "role": "Role",
@@ -198,5 +204,6 @@
   "state_province_region": "State / Province / Region",
   "postal_zip_code": "Postal / ZIP code",
   "paypal": "Paypal",
-  "stripe": "Stripe"
+  "stripe": "Stripe",
+  "my_desk": "My desk"
 }
