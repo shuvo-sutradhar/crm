@@ -205,5 +205,6 @@
   "postal_zip_code": "Postal / ZIP code",
   "paypal": "Paypal",
   "stripe": "Stripe",
-  "my_desk": "My desk"
+  "my_desk": "My desk",
+  "punched_in_note": "Punched in note"
 }

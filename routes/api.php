@@ -11,6 +11,7 @@ use App\Http\Controllers\API\ActivityController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\PermissionController;
+use App\Http\Controllers\API\AttandacneController;
 use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -38,6 +39,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
     
+    /*
+    *   AttandanceControlelr
+    */
+    Route::apiResource('attandance', AttandacneController::class);
+    Route::get('todays-attandance', [AttandacneController::class, 'todaysAttandance']);
+    Route::post('punch-in', [AttandacneController::class, 'punchIn']);
+
+
     /*
     *   Role and permission Controller
     */

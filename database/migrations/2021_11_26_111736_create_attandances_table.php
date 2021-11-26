@@ -20,9 +20,9 @@ class CreateAttandancesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('no action');
             $table->timestamp('punched_in');
-            $table->text('punched_in_note');
-            $table->timestamp('punched_out');
-            $table->text('punched_out_out');
+            $table->text('punched_in_note')->nullable();
+            $table->timestamp('punched_out')->nullable();
+            $table->text('punched_out_out')->nullable();
             $table->string('attandance_type');
             $table->string('status');
             $table->timestamps();

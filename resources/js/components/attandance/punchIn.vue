@@ -23,14 +23,14 @@
                     </div>
                         
                     <div>
-                        <label for="description" class="input-label">{{ $t('description') }} (Optional)</label>
-                        <textarea id="description"  
+                        <label for="punched_in_note" class="input-label">{{ $t('punched_in_note') }} (Optional)</label>
+                        <textarea id="punched_in_note"  
                             class="input-field" 
                             type="text" 
-                            :class="{ 'border border-red-500': form.errors.has('description') }"
-                            v-model="form.description">
+                            :class="{ 'border border-red-500': form.errors.has('punched_in_note') }"
+                            v-model="form.punched_in_note">
                         </textarea>
-                        <has-error :form="form" field="description" class="text-red-500" />
+                        <has-error :form="form" field="punched_in_note" class="text-red-500" />
                     </div>
 
                 </div>
@@ -63,8 +63,7 @@ export default {
 
     data: () => ({
         form: new Form({
-            name:'',
-            description:'',
+            punched_in_note:'',
         })
     }),
 
@@ -77,7 +76,7 @@ export default {
         
         // save role
         async save () {
-            await this.form.post(window.location.origin+'/api/attandance')
+            await this.form.post(window.location.origin+'/api/punch-in')
             .then((response)=>{
                 toast.fire({icon: 'success', title: 'Punched in Successfully'})
                 this.$store.state.department.departments.data.unshift(response.data.data);

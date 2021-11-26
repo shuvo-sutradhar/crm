@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Attandance;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AttandacneController extends Controller
 {
@@ -15,6 +17,50 @@ class AttandacneController extends Controller
     public function index()
     {
         //
+    }
+
+
+    /**
+     * Get todays attandacne data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function todaysAttandance()
+    {
+        return Attandance::where('user_id', auth()->user()->id)->whereDate('punched_in', Carbon::today())->get();
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function punchIn(Request $request)
+    {   
+    
+        $this->validate($request, [
+            'description'       =>  'nullable|min:3|max:500',
+        ]);
+
+
+        $todaysAttandance = Attandance::where('user_id', auth()->user()->id)->whereDate('punched_in', Carbon::today())->get();
+        
+        if(count($todaysAttandance) <= 0) { 
+            // save role
+            $attandance = Attandance::create([
+                'user_id'           => auth()->user()->id,
+                'punched_in'        => now(),
+                'punched_in_note'   => $request->input('description'),
+                'attandance_type'   => 'auto',
+                'status'            => 'approved',
+            ]);
+
+
+            return $this->responseWithSuccess('Department added successfully', $attandance);
+        }
+
+        return $this->responseWithError('Opps! You are trying with bad request..');
     }
 
     /**
