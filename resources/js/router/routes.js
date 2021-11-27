@@ -3,10 +3,10 @@ function page (path) {
 }
 
 export default [
-  { path: '/', name: 'welcome', component: page('welcome.vue') },
+  // { path: '/', name: 'welcome', component: page('welcome.vue') },
 
-  { path: '/login', name: 'login', component: page('auth/login.vue') },
-  { path: '/register', name: 'register', component: page('auth/register.vue') },
+  { path: '/', name: 'login', component: page('auth/login.vue') },
+  // { path: '/register', name: 'register', component: page('auth/register.vue') },
   { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },
   { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
@@ -15,6 +15,7 @@ export default [
 
   //  My desk route
   { path: '/my-desk', name: 'my-desk.index', component: page('myDesk/index.vue') },
+  { path: '/attandance', name: 'attandance.index', component: page('attandance/index.vue') },
 
   //  Department route
   { path: '/settings/department', name: 'department.index', component: page('settings/department/index.vue') },

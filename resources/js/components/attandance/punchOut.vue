@@ -1,14 +1,14 @@
 <template>
-    <modal name="punchIn">
+    <modal name="punchOut">
         <div slot="header">
-            <h2 class="text-xl text-gray-600 font-medium">Punch In</h2>
+            <h2 class="text-xl text-gray-600 font-medium">Punch Out</h2>
         </div>
         <div slot="modal-form">
             <form @submit.prevent="save" @keydown="form.onKeydown($event)" multipart>
                 <div slot="body" class="p-8 py-12">
                     
                     <div class="mb-6">
-                        <label for="description" class="input-label">{{ $t('Punch in time') }} </label>
+                        <label for="description" class="input-label">{{ $t('Punch out time') }} </label>
                         <div class="flex mt-2">
                             <div>
                                 <div class="bg-yellow-200 w-12 h-12 rounded-full flex items-center justify-center text-center">
@@ -23,11 +23,11 @@
                     </div>
                         
                     <div>
-                        <label for="punched_in_note" class="input-label">{{ $t('punched_in_note') }} (Optional)</label>
-                        <textarea id="punched_in_note"  
+                        <label for="punched_out_note" class="input-label">{{ $t('Punched out note') }} (Optional)</label>
+                        <textarea id="punched_out_note"  
                             class="input-field" 
                             type="text" 
-                            :class="{ 'border border-red-500': form.errors.has('punched_in_note') }"
+                            :class="{ 'border border-red-500': form.errors.has('punched_out_note') }"
                             v-model="form.punched_in_note">
                         </textarea>
                         <has-error :form="form" field="punched_in_note" class="text-red-500" />
@@ -41,7 +41,7 @@
                             <span class="ml-1">Go back</span>
                         </a>
                         <v-button :loading="form.busy" class="button-primary cursor-pointer">
-                            <span class="mr-1">Punch In</span>
+                            <span class="mr-1">Punch Out</span>
                             <icon name="finger-print" classList="text-gray-200 w-6 h-6 mr-1" />
                         </v-button>
                     </div>
@@ -63,7 +63,7 @@ export default {
 
     data: () => ({
         form: new Form({
-            punched_in_note:'',
+            punched_out_note:'',
         })
     }),
 
@@ -71,14 +71,14 @@ export default {
 
     methods: {
         close() {
-			this.$store.dispatch("modals/close", 'punchIn')
+			this.$store.dispatch("modals/close", 'punchOut')
         },
         
         // save role
         async save () {
-            await this.form.post(window.location.origin+'/api/punch-in')
+            await this.form.patch(window.location.origin+'/api/punch-out')
             .then((response)=>{
-                toast.fire({icon: 'success', title: 'Punched in Successfully'})
+                toast.fire({icon: 'success', title: 'Punched out Successfully'})
                 this.$store.dispatch("attandance/fetchTodaysAttandance");
                 this.form.reset();
                 this.close();

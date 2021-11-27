@@ -4,13 +4,13 @@
     <div class=" mx-auto">
       <div class="flex flex-wrap w-full mb-4">
         <div class="w-full">
-          <h1 class="page-heading">{{ $t('services') }}</h1>
+          <h1 class="page-heading">{{ $t('All settings') }}</h1>
         </div>
       </div>
       <div class="flex flex-wrap -m-4">
 
-        <div class="p-4 lg:w-1/3 sm:w-1/2 w-full" v-for="(item, key) in items" :key="key">
-          <div class="flex rounded shadow h-full bg-white dark:bg-gray-900 p-8 flex-col">
+        <div class="p-4 lg:w-1/3 sm:w-1/2 w-full" v-for="(item, key) in items" :key="key" >
+          <div class="flex rounded shadow h-full bg-white dark:bg-gray-900 p-8 flex-col" v-if="$can(item.permission)">
             <div class="flex items-center mb-3">
               <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full text-white flex-shrink-0" :class="item.bg">
                 <icon :name="item.icon" :classList="item.color"/>
@@ -56,7 +56,8 @@ export default {
         routeName: 'company',
         color: 'text-indigo-500',
         bg: 'bg-indigo-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'company-setings'
       },
       {
         title: 'department',
@@ -65,7 +66,8 @@ export default {
         routeName: 'department.index',
         color: 'text-pink-500',
         bg: 'bg-pink-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'department'
       },
       {
         title: 'designation',
@@ -74,7 +76,8 @@ export default {
         routeName: 'designation.index',
         color: 'text-green-500',
         bg: 'bg-green-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'designation'
       },
       {
         title: 'role-permission',
@@ -83,7 +86,8 @@ export default {
         routeName: 'role.index',
         color: 'text-purple-500',
         bg: 'bg-purple-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'role'
       },
       {
         title: 'holiday',
@@ -92,7 +96,8 @@ export default {
         routeName: '',
         color: 'text-green-500',
         bg: 'bg-green-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'holiday'
       },
       {
         title: 'leave_settings',
@@ -101,7 +106,8 @@ export default {
         routeName: 'leave-settings.index',
         color: 'text-red-500',
         bg: 'bg-red-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'leave_settings'
       },
       {
         title: 'attandance',
@@ -110,7 +116,8 @@ export default {
         routeName: '',
         color: 'text-green-500',
         bg: 'bg-green-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'attandance'
       },
       {
         title: 'payroll',
@@ -119,7 +126,8 @@ export default {
         routeName: '',
         color: 'text-green-500',
         bg: 'bg-green-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'payroll'
       },
       {
         title: 'org_structure',
@@ -128,7 +136,8 @@ export default {
         routeName: '',
         color: 'text-green-500',
         bg: 'bg-green-200',
-        btnName: 'change-settings'
+        btnName: 'change-settings',
+        permission: 'org_structure'
       },
       {
         title: 'team',
@@ -137,7 +146,8 @@ export default {
         routeName: 'team.index',
         color: 'text-red-500',
         bg: 'bg-red-200',
-        btnName: 'view_detials'
+        btnName: 'view_detials',
+        permission: 'team'
       },
       {
         title: 'tag',
@@ -146,7 +156,8 @@ export default {
         routeName: 'tag',
         color: 'text-yellow-500',
         bg: 'bg-yellow-200',
-        btnName: 'view_detials'
+        btnName: 'view_detials',
+        permission: 'tag'
       },
       {
         title: 'log',
@@ -155,7 +166,8 @@ export default {
         routeName: 'activity-log',
         color: 'text-purple-500',
         bg: 'bg-purple-200',
-        btnName: 'view_log'
+        btnName: 'view_log',
+        permission: 'log'
       }
     ]
   }),

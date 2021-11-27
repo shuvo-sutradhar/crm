@@ -1,28 +1,28 @@
 <template>
-    <modal name="punchIn">
+    <modal name="manualAttandance">
         <div slot="header">
-            <h2 class="text-xl text-gray-600 font-medium">Punch In</h2>
+            <h2 class="text-xl text-gray-600 font-medium">Manual Attandance In</h2>
         </div>
         <div slot="modal-form">
             <form @submit.prevent="save" @keydown="form.onKeydown($event)" multipart>
                 <div slot="body" class="p-8 py-12">
                     
                     <div class="mb-6">
-                        <label for="description" class="input-label">{{ $t('Punch in time') }} </label>
-                        <div class="flex mt-2">
-                            <div>
-                                <div class="bg-yellow-200 w-12 h-12 rounded-full flex items-center justify-center text-center">
-                                    <icon name="clock" classList="text-yellow-500 w-6 h-6" />
-                                </div>
-                            </div>
-                            <div class="ml-2">
-                                <h2 class="text-indigo-500">Today ({{  new Date() | moment('h:mm a') }})</h2>
-                                <p class="text-gray-600 text-sm">{{  new Date() | moment('MMMM Do YYYY') }}</p>
-                            </div>
+                        <label for="description" class="input-label">{{ $t('Select user') }} </label>
+                        <select class="input-field">
+                            <option>Shuvo</option>
+                            <option>Jon</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="description" class="input-label">{{ $t('In time') }} </label>
+                        <div class="flex justify-between">
+                            <input type="date" class="input-field mr-1" />
+                            <input type="time" class="input-field ml-2" />
                         </div>
                     </div>
-                        
-                    <div>
+                    <div class="mb-6">
                         <label for="punched_in_note" class="input-label">{{ $t('punched_in_note') }} (Optional)</label>
                         <textarea id="punched_in_note"  
                             class="input-field" 
@@ -32,6 +32,36 @@
                         </textarea>
                         <has-error :form="form" field="punched_in_note" class="text-red-500" />
                     </div>
+
+                    <div class="mb-6">
+                        <label for="out_time" class="input-label">{{ $t('Out time') }} </label>
+                        <div class="flex justify-between">
+                            <input type="date" class="input-field mr-1" />
+                            <input type="time" class="input-field ml-2" />
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="punched_out_note" class="input-label">{{ $t('Punch out note') }} (Optional)</label>
+                        <textarea id="punched_out_note"  
+                            class="input-field" 
+                            type="text" 
+                            :class="{ 'border border-red-500': form.errors.has('punched_in_note') }"
+                            v-model="form.punched_in_note">
+                        </textarea>
+                        <has-error :form="form" field="punched_in_note" class="text-red-500" />
+                    </div>
+
+                    <div>
+                        <label for="punched_in_note" class="input-label">{{ $t('Punch status') }}</label>
+                        <select class="input-field">
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                            <option value="onleave">On leave</option>
+                        </select>
+                        <has-error :form="form" field="punched_in_note" class="text-red-500" />
+                    </div>
+                        
+
 
                 </div>
                 <div slot="footer">
@@ -71,7 +101,7 @@ export default {
 
     methods: {
         close() {
-			this.$store.dispatch("modals/close", 'punchIn')
+			this.$store.dispatch("modals/close", 'manualAttandance')
         },
         
         // save role

@@ -5,13 +5,14 @@ use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\API\MyDeskController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\API\ActivityController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\API\AttandanceController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\PermissionController;
-use App\Http\Controllers\API\AttandacneController;
 use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -42,9 +43,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     /*
     *   AttandanceControlelr
     */
-    Route::apiResource('attandance', AttandacneController::class);
-    Route::get('todays-attandance', [AttandacneController::class, 'todaysAttandance']);
-    Route::post('punch-in', [AttandacneController::class, 'punchIn']);
+    Route::apiResource('attandance', AttandanceController::class);
+    Route::get('my-attandance', [MyDeskController::class, 'index']);
+    Route::get('todays-attandance', [MyDeskController::class, 'todaysAttandance']);
+    Route::post('punch-in', [MyDeskController::class, 'punchIn']);
+    Route::patch('punch-out', [MyDeskController::class, 'punchOut']);
 
 
     /*

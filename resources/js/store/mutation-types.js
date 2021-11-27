@@ -50,3 +50,8 @@ export const DELETE_DESIGNATION    = 'DELETE_DESIGNATION'
 // modal.js
 export const OPEN_MODAL   = 'OPEN_MODAL'
 export const CLOSE_MODAL  = 'CLOSE_MODAL'
+
+// attandacne.js
+export const FETCH_ATTANDANCE = 'FETCH_ATTANDANCE'
+export const FETCH_TODAYS_ATTANDANCE = 'FETCH_TODAYS_ATTANDANCE'
+export const FETCH_ALL_ATTANDANCE = 'FETCH_ALL_ATTANDANCE'

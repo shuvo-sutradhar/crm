@@ -6,9 +6,11 @@ use Carbon\Carbon;
 use App\Models\Attandance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MyDeskResource;
 
-class AttandacneController extends Controller
+class MyDeskController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +18,9 @@ class AttandacneController extends Controller
      */
     public function index()
     {
-        //
+        return MyDeskResource::collection(Attandance::where('user_id', auth()->user()->id)->latest()->paginate(26));
     }
+
 
 
     /**
@@ -27,8 +30,10 @@ class AttandacneController extends Controller
      */
     public function todaysAttandance()
     {
-        return Attandance::where('user_id', auth()->user()->id)->whereDate('punched_in', Carbon::today())->get();
+        return Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
     }
+
+
 
 
     /**
@@ -44,16 +49,16 @@ class AttandacneController extends Controller
         ]);
 
 
-        $todaysAttandance = Attandance::where('user_id', auth()->user()->id)->whereDate('punched_in', Carbon::today())->get();
-        
-        if(count($todaysAttandance) <= 0) { 
+        $todaysAttandance = Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
+
+        if(!$todaysAttandance) { 
             // save role
             $attandance = Attandance::create([
                 'user_id'           => auth()->user()->id,
-                'punched_in'        => now(),
+                'punched_in'        => Carbon::now(),
                 'punched_in_note'   => $request->input('description'),
                 'attandance_type'   => 'auto',
-                'status'            => 'approved',
+                'status'            => 'present',
             ]);
 
 
@@ -63,48 +68,29 @@ class AttandacneController extends Controller
         return $this->responseWithError('Opps! You are trying with bad request..');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
-     * Display the specified resource.
+     * Display a listing of the resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function punchOut(Request $request)
+    {   
+    
+        $todayPunchOut = Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
+
+
+        $this->validate($request, [
+            'description'       =>  'nullable|min:3|max:500',
+        ]);
+        $todayPunchOut->punched_out = Carbon::now();
+        $todayPunchOut->punched_out_note = $request->punched_out_note;
+        $todayPunchOut->save();
+
+        return $this->responseWithSuccess('Department added successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

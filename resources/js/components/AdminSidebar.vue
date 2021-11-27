@@ -77,7 +77,13 @@ export default {
                         title: 'my_desk',
                         route: 'my-desk.index',
                         icon: 'collection',
-                        permission: 'dashboard-view'
+                        permission: 'my-desk'
+                    },
+                    {
+                        title: 'attandance_history',
+                        route: 'attandance.index',
+                        icon: 'collection',
+                        permission: 'attandance-history'
                     }
                 ]
             },

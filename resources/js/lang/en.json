@@ -206,5 +206,6 @@
   "paypal": "Paypal",
   "stripe": "Stripe",
   "my_desk": "My desk",
-  "punched_in_note": "Punched in note"
+  "punched_in_note": "Punched in note",
+  "attandance_history": "Attandance history"
 }

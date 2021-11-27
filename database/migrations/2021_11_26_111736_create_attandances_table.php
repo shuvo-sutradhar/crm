@@ -22,7 +22,7 @@ class CreateAttandancesTable extends Migration
             $table->timestamp('punched_in');
             $table->text('punched_in_note')->nullable();
             $table->timestamp('punched_out')->nullable();
-            $table->text('punched_out_out')->nullable();
+            $table->text('punched_out_note')->nullable();
             $table->string('attandance_type');
             $table->string('status');
             $table->timestamps();

@@ -1,11 +1,15 @@
 <template>
-    <div class="container mx-auto max-w-7xl">
+    <div class="container mx-auto max-w-7xl" v-if="$can('attandance-history')">
 
         <!-- page-heading-start -->
-        <div class="flex flex-wrap w-full mb-4">
-          <div class="w-full mb-0 md:mb-6 lg:mb-0">
+        <div class="flex justify-between mb-6 items-center">
+          <div class="mb-0 md:mb-6 lg:mb-0">
             <h1 class="page-heading">{{ $t('Attandance history') }}</h1>
           </div>
+          <button @click="open('manualAttandance')" class="button-primary bg-indigo-500 text-white font-bold">
+            <icon name="finger-print" classList="text-white w-6 h-6 mr-1" />
+            Manual Punch
+          </button>
         </div>
         <!-- page-heading-End -->
 
@@ -17,6 +21,7 @@
                 <table class="w-full whitespace-no-wrap bg-white table-striped">
                     <thead>
                         <tr class="text-left bg-gray-50 dark:bg-gray-900">
+                            <th class="tr">{{ $t('User') }}</th>     
                             <th class="tr">{{ $t('Date') }}</th>     
                             <th class="tr">{{ $t('Punched In') }}</th>     
                             <th class="tr">{{ $t('Punched Out') }}</th>                    
@@ -28,6 +33,17 @@
                 
                     <tbody class="dark:bg-gray-900">
                         <tr v-show="attandances.length" v-for="(data, index) in attandances" :key="index" class="hover:bg-gray-100 dark:hover:bg-gray-800">
+                            
+                            <td class="td text-left">
+                                <router-link to="" class="z-10 menu-btn focus:outline-none flex items-center px-3 md:px-0">
+                                    <div class="w-12 h-12 overflow-hidden rounded-full shadow-sm border-2 border-indigo-200">
+                                        <img :src="data.user.photo_url" class="w-full h-full object-cover" alt="s" >
+                                    </div> 
+                                    <div class="ml-2">
+                                        <p class="flex-1 text-indigo-500 capitalize dark:text-gray-300">{{ data.user.name }}</p>
+                                    </div>
+                                </router-link>
+                            </td>
                             <td class="td">
                               {{ data.created_at | moment('MMMM Do YYYY') }}
                             </td>
@@ -81,15 +97,20 @@
 
         </div>
         <!-- page content end -->
+
+        <manual-attandance />
     </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex"
+import ManualAttandance from '~/components/attandance/manualAttandance'
+
 export default {
   layout: 'dashboard',
   middleware: 'auth',
+  components: { ManualAttandance },
 
   
   metaInfo () {
@@ -102,7 +123,7 @@ export default {
 
   // GET TEAM DATA FROM VUEX-GETTERS
   computed: {
-    ...mapGetters('mydesk', ['attandances','loading', 'pagination']),
+    ...mapGetters('attandance', ['attandances','loading', 'pagination']),
   },
 
   created() {
@@ -112,16 +133,49 @@ export default {
   methods: {
 
     getData() {
-      this.$store.state.mydesk.loading=true;
-      this.$store.dispatch("mydesk/fetchAttandacne", this.pagination.current_page);
+      this.$store.state.attandance.loading=true;
+      this.$store.dispatch("attandance/fetchAttandacne", this.pagination.current_page);
     },
 
     // PAGINATION
     async paginate(){
       this.getData();
     },
+
+
+    // punch in-out modal
+    open(name) {
+        this.$store.dispatch("modals/open", name);
+        // if(tag!=null){
+        //     this.$store.state.tag.tagSlug=tag;
+        // }
+    },
+
   },
 
 
 }
 </script>
+
+
+<style>
+
+.clock {
+    width: 100px;
+    height: 100px;
+    font-size: 12px;
+}
+
+.clock .clock-hour{
+  background-color: #F36565 !important;
+}
+
+.clock .clock-minute{
+  background-color: #EF61A8 !important;
+}
+
+.clock .clock-second {
+  background-color: #fff !important;
+}
+
+</style>

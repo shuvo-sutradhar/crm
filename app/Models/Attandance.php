@@ -41,4 +41,5 @@ class Attandance extends Model
         'status'
     ];
 
+
 }
