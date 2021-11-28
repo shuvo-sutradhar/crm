@@ -32,19 +32,28 @@
                               {{ data.created_at | moment('MMMM Do YYYY') }}
                             </td>
                             <td class="td">
+                              <div v-if="data.status == 'present'">
                                 {{ data.punched_in | moment('h:mm A') }}
-
-                              <div v-if="data.punched_in">
-                                <span v-if="data.punched_in_status == 'early'" class="text-yellow-500 px-4 py-1 text-sm rounded-xl inline-block">Early</span>
-                                <span v-else-if="data.punched_in_status == 'late'" class="text-red-500 px-4 py-1 text-sm rounded-xl inline-block">Late</span>
-                                <span v-else class="text-indigo-500 px-4 py-1 text-sm rounded-xl inline-block">On time</span>
+                                <div v-if="data.punched_in">
+                                  <span v-if="data.punched_in_status == 'early'" class="text-yellow-500 px-4 py-1 text-sm rounded-xl inline-block">Early</span>
+                                  <span v-else-if="data.punched_in_status == 'late'" class="text-red-500 px-4 py-1 text-sm rounded-xl inline-block">Late</span>
+                                  <span v-else class="text-indigo-500 px-4 py-1 text-sm rounded-xl inline-block">On time</span>
+                                </div>
+                              </div>
+                              <div v-else>
+                                -----
                               </div>
                             </td>
                             <td class="td">
-                              {{ data.punched_out | moment('h:mm A') }}
-                              <div v-if="data.punched_out !== 'Not yet'">
-                                <span v-if="data.punched_out_status == 'early'" class="text-red-500 px-4 py-1 text-sm rounded-xl inline-block">Leave Early</span>
-                                <span v-else class="text-indigo-500 px-4 py-1 text-sm rounded-xl mt-2 inline-block">On time</span>
+                              <div v-if="data.status == 'present'">
+                                {{ data.punched_out | moment('h:mm A') }}
+                                <div v-if="data.punched_out !== 'Not yet'">
+                                  <span v-if="data.punched_out_status == 'early'" class="text-red-500 px-4 py-1 text-sm rounded-xl inline-block">Leave Early</span>
+                                  <span v-else class="text-indigo-500 px-4 py-1 text-sm rounded-xl mt-2 inline-block">On time</span>
+                                </div>
+                              </div>
+                              <div v-else>
+                                -----
                               </div>
                             </td>
                             <td class="td capitalize">

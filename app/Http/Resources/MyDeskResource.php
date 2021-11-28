@@ -59,33 +59,39 @@ class MyDeskResource extends JsonResource
 
     // check punched In status
     public function punchedInStatus() {
-        return Carbon::today();
-        // if(Carbon::parse($this->punched_in)->format('h:i:s') > '10:16:00') {
-        //     return 'late';
-        // } if (Carbon::parse($this->punched_in)->format('h:i:s') < '09:55:00') {
-        //     return 'early';
-        // } else {
-        //     return 'in_time';
-        // }
+        $today = date('Y-m-d');
+        $entryTime = Carbon::parse($this->punched_in);
+        $earlyEntry = Carbon::parse($today. ' 09:55:00');
+        $lateEntry = Carbon::parse($today. ' 10:15:00');
+
+        $earlyTimeDiff = Carbon::parse($entryTime)->diffInMinutes($earlyEntry, false);
+        $lateTimeDiff = Carbon::parse($entryTime)->diffInMinutes($lateEntry, false);
+
+        $entryType = null;
+        if($lateTimeDiff >= 0 && $earlyTimeDiff <= 0){
+            $entryType  = 'in_time';
+        }else if($lateTimeDiff <= 0 && $earlyTimeDiff <= 0){
+            $entryType  = 'late';
+        }else{
+            $entryType  = 'early entry';
+        }
+        return $entryType;
     }
 
     // check punched In status
     public function punchedOutStatus() {
-        if(Carbon::parse($this->punched_out)->format('h:i:s') < '07:00:00') {
-            return 'early';
-        } else{
-            return 'in_time';
+        $today = date('Y-m-d');
+        $entryTime = Carbon::parse($this->punched_out);
+        $lastEntryTime = Carbon::parse($today. ' 19:00:00');
+        $timeDiff = Carbon::parse($entryTime)->diffInMinutes($lastEntryTime, false);
+
+        if($timeDiff > 0){
+            $entryType  = 'early';
+        }else{
+            $entryType  = 'in_time';
         }
+        return $entryType;
     }
 
-    public function attandanceStatus() {
-        if(Carbon::parse($this->punched_in)->format('h:i:s') > '10:16:00') {
-            return 'Already late';
-        } if (Carbon::parse($this->punched_in)->format('h:i:s') < '09:55:00') {
-            return 'Early';
-        } else {
-            return 'In time';
-        }
-    }
 }
 

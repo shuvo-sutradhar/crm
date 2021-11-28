@@ -79,7 +79,7 @@ export default {
             await this.form.patch(window.location.origin+'/api/punch-out')
             .then((response)=>{
                 toast.fire({icon: 'success', title: 'Punched out Successfully'})
-                this.$store.dispatch("attandance/fetchTodaysAttandance");
+                this.$store.dispatch("mydesk/fetchTodaysAttandance");
                 this.form.reset();
                 this.close();
             }).catch(()=>{

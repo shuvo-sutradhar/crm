@@ -3,7 +3,7 @@
 		
 	     <div id="switch-plans-modal" class="fixed w-full h-full inset-0 z-50 flex justify-center">
 			<div class="fixed opacity-50 bg-black inset-0 w-full h-full"></div>
-			<div class="absolute w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12 bg-white rounded-lg mt-32">
+			<div class="absolute w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12 bg-white rounded-lg mt-16">
 
 				<slot name="closeModal">
 					<div @click="close" id="switch-plan-close" class="absolute right-0 top-0 -mt-4 -ml-4 h-8 w-8 rounded-full shadow bg-white text-xl flex justify-center align-center cursor-pointer">

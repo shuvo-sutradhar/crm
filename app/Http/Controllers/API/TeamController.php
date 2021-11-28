@@ -28,10 +28,10 @@ class TeamController extends Controller
     {
         if(request()->get('page')) {
             // get user with pagination
-            return TeamResource::collection(User::where('account_role', '!=' , 2)->paginate(10));
+            return TeamResource::collection(User::paginate(10));
         } else {
             // get all user
-            return User::select('name','slug')->where('account_role', '!=' , 2)->get();
+            return User::select('name','slug','id')->get();
         }
     }
 
