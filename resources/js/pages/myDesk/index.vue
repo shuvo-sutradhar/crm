@@ -4,8 +4,9 @@
         <!-- page-heading-start -->
         <div class="flex justify-between mb-6 items-center">
           <div class="mb-0 md:mb-6 lg:mb-0">
-            <button @click="filter = !filter" class="button-primary bg-white text-gray-700 font-bold mr-2">
-              <icon name="filter" classList="text-gray-600 w-5 h-5 mr-1" />
+            <button @click="filterstatus" class="button-primary bg-white text-gray-700 font-bold mr-2">
+              <icon v-if="filter == false" name="filter" classList="text-gray-600 w-5 h-5 mr-1" />
+              <icon v-else name="clsoe" classList="text-gray-600 w-5 h-5 mr-1" />
             </button>
             <form v-if="filter" class="mr-2 flex items-center justify-center">
               <div class="mx-2">
@@ -168,7 +169,17 @@ export default {
     async submitsearch(){
       this.$store.state.mydesk.loading=true;
       this.$store.dispatch("mydesk/fetchSearchData", {data: this.form, pagination: this.pagination.current_page});
+    },
+
+    filterstatus() {
+      if(this.filter == false) {
+        this.filter = true;
+      } else {
+        this.form.reset();
+        this.filter = false;
+      }
     }
+
 
   },
 

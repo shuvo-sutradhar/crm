@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link :to="{ name: user ? 'home' : 'welcome' }" class="text-3xl font-semibold leading-none">
+        <router-link :to="{ name: user ? 'home' : 'login' }" class="text-3xl font-semibold leading-none">
             <img class="h-8" src="/../../../assets/images/shuffle-logo.svg" alt="ESP" width="auto">
         </router-link>
     </div>
