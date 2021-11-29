@@ -25,6 +25,7 @@ class CreateAttandancesTable extends Migration
             $table->text('punched_out_note')->nullable();
             $table->string('attandance_type');
             $table->string('status');
+            $table->timestamp('attandance_for');
             $table->timestamps();
         });
     }

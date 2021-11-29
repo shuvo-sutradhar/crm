@@ -4,7 +4,7 @@
       <div class="col-span-1 md:col-span-6 lg:col-span-3 rounded shadow h-full p-8 flex-col bg-gradient-to-r from-blue-800 vai-purple-800 to-indigo-600 text-white relative">
         <div class="flex justify-between ">
           <div>
-            <h2 class="text-2xl font-semibold">Good morning,<br> Mr. Jon Doe</h2>
+            <h2 class="text-2xl font-semibold">Good morning,<br> <span class="capitalize">{{ user.name }}</span></h2>
             <h4 class="text-xl text-gray-300 mt-4">Welcome to your dashboard</h4>
             <button v-if="!todaysAttandance" @click="open('punchIn')" class="button-primary mt-6 bg-white text-gray-800 font-bold">
               <icon name="finger-print" classList="text-gray-500 w-6 h-6 mr-1" />
@@ -23,6 +23,7 @@
           <div class=" bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-center">
               <icon name="clock" classList="text-gray-700 w-6 h-6" />
           </div>
+        
           <h2 class="text-4xl font-semibold text-gray-700 my-4" v-if="todaysAttandance">{{ todaysAttandance.punched_in | moment('h:mm A') }}</h2>
           <h2 class="text-4xl font-semibold text-gray-700 my-4" v-else>00:00</h2>
           <h3 class="text-md bg-gray-700 text-gray-100 py-2 px-12 uppercase font-semibold rounded-sm ">Punch In Time</h3>
@@ -33,7 +34,7 @@
           <div class="bg-indigo-200 w-12 h-12 rounded-full flex items-center justify-center text-center">
               <icon name="clock" classList="text-indigo-400 w-6 h-6" />
           </div>
-          <h2 class="text-4xl font-semibold text-indigo-400 my-4">{{ hoursDiff }}:{{ minutesDiff }}:{{ secondsDiff }}</h2>
+          <h2 class="text-4xl font-semibold text-indigo-400 my-4">{{ workingHours }}</h2>
           <h3 class="text-md bg-indigo-200 text-indigo-500 py-2 px-12 uppercase font-semibold rounded-sm ">Working Hours</h3>
    
       </div>
@@ -50,8 +51,8 @@
     </div>
 
 
-    <punch-in />
-    <punch-out />
+    <punch-in @punchChange="punchStatus" />
+    <punch-out @punchChange="punchStatus" />
   </div>
 </template>
 
@@ -64,7 +65,7 @@ const moment= require('moment')
 // import axios from 'axios'
 export default {
   layout: 'dashboard',
-  middleware: 'auth',
+  middleware: ['auth','admin','check-permissions'],
 
   components: {
     Clock,
@@ -77,25 +78,25 @@ export default {
   },
 
   data: () => ({
-    hoursDiff: null,
-    minutesDiff: null,
-    secondsDiff: null
+    workingHours: '00:00',
+    intervalStatus: null,
   }),
 
-  // GET TEAM DATA FROM VUEX-GETTERS
+
   computed: {
       ...mapGetters('mydesk', ['todaysAttandance']),
+      ...mapGetters('auth', ['user']),
 
   },
 
-  mounted: function(){   
+  created() {
     this.getData();
-    this.workingHours();
+    setTimeout(function () { 
+      this.countDownTimer(); 
+    }.bind(this), 500)
+    
   },
 
-  watch() {
-
-  },
 
   methods: {
 
@@ -103,23 +104,36 @@ export default {
       this.$store.dispatch("mydesk/fetchTodaysAttandance");
     },
 
-    workingHours() {
+    countDownTimer() {
+      if(this.todaysAttandance.punched_in && !this.todaysAttandance.punched_out) {
+          this.intervalStatus = setInterval(() => {
+            var now = moment().format('YYYY-MM-DD HH:mm:ss');
+            var then  = this.todaysAttandance.punched_in;
+            this.workingHours = moment.utc(moment(now,"YYYY-MM-DD HH:mm:ss").diff(moment(then,"YYYY-MM-DD HH:mm:ss"))).format("HH:mm:ss");
+          }, 1000)
+      } else if(this.todaysAttandance.punched_in && this.todaysAttandance.punched_out) {
+          if(this.intervalStatus) {
+            clearInterval(this.intervalStatus);
+          }
+          var now = this.todaysAttandance.punched_out;
+          var then  = this.todaysAttandance.punched_in;
+          this.workingHours = moment.utc(moment(now,"YYYY-MM-DD HH:mm:ss").diff(moment(then,"YYYY-MM-DD HH:mm:ss"))).format("HH:mm:ss");
+      } else {
+          if(this.intervalStatus) {
+            clearInterval(this.intervalStatus);
+          }
+          this.workingHours = '00:00';
+      }
 
-      //return moment().diff(this.todaysAttandance.punched_in, 'minutes')
+      
 
-      var startTime = moment(this.todaysAttandance.punched_in, 'DD-MM-YYYY hh:mm:ss');
-      var endTime = moment(this.todaysAttandance.punched_out, 'DD-MM-YYYY hh:mm:ss');
-    
-      this.hoursDiff = endTime.diff(startTime, 'hours');
-      console.log('Hours:' + this.hoursDiff);
-    
-      this.minutesDiff = endTime.diff(startTime, 'minutes');
-      console.log('Minutes:' + this.minutesDiff);
-    
-      this.secondsDiff = endTime.diff(startTime, 'seconds');
-      console.log('Seconds:' + this.secondsDiff);
+    },
 
 
+    workingTime() {
+        var now = moment().format('YYYY-MM-DD HH:mm:ss');
+        var then  = this.todaysAttandance.punched_in;
+        return moment.utc(moment(now,"YYYY-MM-DD HH:mm:ss").diff(moment(then,"YYYY-MM-DD HH:mm:ss"))).format("HH:mm:ss");
     },
 
     // punch in-out modal
@@ -129,6 +143,14 @@ export default {
         //     this.$store.state.tag.tagSlug=tag;
         // }
     },
+
+
+    punchStatus() {
+      this.$store.dispatch("mydesk/fetchTodaysAttandance");
+      setTimeout(function () { 
+        this.countDownTimer(); 
+      }.bind(this), 500)
+    }
   }
 
 }

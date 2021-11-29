@@ -79,7 +79,7 @@ export default {
             await this.form.post(window.location.origin+'/api/punch-in')
             .then((response)=>{
                 toast.fire({icon: 'success', title: 'Punched in Successfully'})
-                this.$store.dispatch("mydesk/fetchTodaysAttandance");
+                this.$emit('punchChange');
                 this.form.reset();
                 this.close();
             }).catch(()=>{

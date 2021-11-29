@@ -44,10 +44,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     *   AttandanceControlelr
     */
     Route::apiResource('attandance', AttandanceController::class);
+    Route::get('/attandance-filter/{data}', [AttandanceController::class, 'search']);
     Route::get('my-attandance', [MyDeskController::class, 'index']);
     Route::get('todays-attandance', [MyDeskController::class, 'todaysAttandance']);
     Route::post('punch-in', [MyDeskController::class, 'punchIn']);
     Route::patch('punch-out', [MyDeskController::class, 'punchOut']);
+    Route::get('/my-attandance-filter/{data}', [MyDeskController::class, 'search']);
 
 
     /*

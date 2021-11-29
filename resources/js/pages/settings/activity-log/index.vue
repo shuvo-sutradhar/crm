@@ -63,7 +63,7 @@ import axios from 'axios'
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
   layout: 'dashboard',
-  middleware: 'auth',
+  middleware: ['auth','admin','check-permissions'],
 
   components: {
     InfiniteLoading,

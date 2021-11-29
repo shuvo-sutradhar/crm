@@ -49,7 +49,15 @@ export const actions = {
     commit(types.FETCH_TODAYS_ATTANDANCE, { todaysAttandance: data })
   },
 
+  // Fetch Search Data
+  async fetchSearchData({ commit }, { data, pagination }) {
 
+    axios.get(window.location.origin+'/api/my-attandance-filter/' + JSON.stringify(data) + '?page='+pagination)
+    .then((res) => {
+      commit(types.FETCH_ATTANDANCE, { attandances: res.data, loading:false });
+    })
+
+  },
   
 
 }

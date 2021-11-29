@@ -1,7 +1,7 @@
 <template>
-    <modal name="manualAttandance">
+    <modal name="manualAttandanceEdit">
         <div slot="header">
-            <h2 class="text-xl text-gray-600 font-medium">Manual Attandance In</h2>
+            <h2 class="text-xl text-gray-600 font-medium">Manual Attandance Edit</h2>
         </div>
         <div slot="modal-form">
             <form @submit.prevent="save" @keydown="form.onKeydown($event)" multipart>
@@ -110,25 +110,41 @@ export default {
     // GET TEAM DATA FROM VUEX-GETTERS
     computed: {
         ...mapGetters('team', ['allUsers']),
+        ...mapGetters('attandance', ['tagId']),
     },
 
 
     created() {
-        
+        this.getData();
     },
 
     methods: {
 
+        getData() {
+            const moment = require('moment');
+            this.form.user = this.tagId.user.id;
+            this.form.check_in_date      = this.tagId.punched_in ? moment(this.tagId.punched_in).format("YYYY-MM-DD") : null;
+            this.form.check_in_time      = this.tagId.punched_in ? moment(this.tagId.punched_in).format("hh:mm") : null;
+            this.form.punched_in_note    = this.tagId.punched_in_note;            
+            this.form.check_out_date     = this.tagId.punched_out ? moment(this.tagId.punched_out).format("YYYY-MM-DD") : null;
+            this.form.check_out_time     = this.tagId.punched_out ? moment(this.tagId.punched_out).format("hh:mm") : null;
+            this.form.punched_out_note   = this.tagId.punched_out_note;
+            this.form.status             = this.tagId.status;
+
+
+            
+        },
 
         close() {
-			this.$store.dispatch("modals/close", 'manualAttandance')
+			this.$store.dispatch("modals/close", 'manualAttandanceEdit')
         },
         
         // save role
         async save () {
-            await this.form.post(window.location.origin+'/api/attandance')
+            await this.form.patch(window.location.origin+'/api/attandance/'+ this.tagId.id)
             .then((response)=>{
                 toast.fire({icon: 'success', title: 'Punched in Successfully'})
+                this.$store.state.attandance.tagId = null;
                 this.$store.dispatch("attandance/fetchAttandacne");
                 this.form.reset();
                 this.close();

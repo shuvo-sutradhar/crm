@@ -17,8 +17,8 @@ class MyDeskResource extends JsonResource
     {
 
         return [
-            'punched_in'            => $this->punched_in,
-            'punched_in_status'      => $this->punchedInStatus(),
+            'punched_in'            => $this->punched_in ? $this->punched_in : null,
+            'punched_in_status'     => $this->punchedInStatus(),
             'punched_in_note'       => $this->punched_in_note,
             'punched_out'           => $this->punchedOut(),
             'punched_out_status'    => $this->punchedOutStatus(),
@@ -27,6 +27,7 @@ class MyDeskResource extends JsonResource
             'attandance_type'       => $this->attandance_type,
             'status'                => $this->status,
             'created_at'            => $this->created_at,
+            'attandance_for'        => $this->attandance_for,
         ];
     }
 

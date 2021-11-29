@@ -38,7 +38,8 @@ class Attandance extends Model
         'punched_out',
         'punched_out_note',
         'attandance_type',
-        'status'
+        'status',
+        'attandance_for'
     ];
 
 

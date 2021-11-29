@@ -31,14 +31,14 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'name' => 'Attandance history',
-                'slug' => 'attandance-history',
+                'slug' => 'attandance',
                 'guard_name' => 'attandancehistory',
                 'created_at' => \now(),
                 'updated_at' => \now(),
             ],
             [
                 'name' => 'Settings View',
-                'slug' => 'settings-view',
+                'slug' => 'settings',
                 'guard_name' => 'settings',
                 'created_at' => \now(),
                 'updated_at' => \now(),

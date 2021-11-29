@@ -23,11 +23,11 @@
 
                     <!-- Nav item start -->
                     <div class="px-4 pb-6 nav-items h-full">
-                        
+                   
                         <ul class="mb-8 text-sm font-medium"
                             v-for="(item, i) in menuItems" :key="i">
 
-                            <h3 v-if="!isSidebarCollapsed" class="mb-2 text-xs uppercase text-gray-1000 font-medium">{{ $t(item.header) }}</h3>
+                            <h3 v-if="!isSidebarCollapsed && (user.account_role==0 && item.header=='setup')" class="mb-2 text-xs uppercase text-gray-1000 font-medium">{{ $t(item.header) }}</h3>
                             <Icon v-else name="dot" classList="mb-2 m-auto" />
                             <li v-for="(nav, key) in item.navs" :key="key">
                                 <router-link :to="{ name: nav.route }"  class="block text-gray-500 dark:text-gray-1000 rounded group" v-if="$can(nav.permission)">
@@ -71,7 +71,7 @@ export default {
                         title: 'dashboard',
                         route: 'home',
                         icon: 'dashboard',
-                        permission: 'dashboard-view'
+                        permission: 'dashboard'
                     },
                     {
                         title: 'my_desk',
@@ -104,6 +104,7 @@ export default {
 
 
     computed: mapGetters({
+        user: 'auth/user',
         isSidebarCollapsed: 'themeConfig/sidebarCollasped',
         isMobileNavOpen: 'themeConfig/mobileNavOpen',
     }),

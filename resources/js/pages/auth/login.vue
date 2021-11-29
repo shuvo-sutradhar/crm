@@ -8,9 +8,6 @@
 
               <div class="mb-6 lg:mb-20 w-full px-3 flex items-center justify-between">
                 <logo />
-                <router-link :to="{ name: 'register' }" class="py-2 px-6 text-xs rounded-l-xl rounded-t-xl bg-purple-600 hover:bg-purple-700 text-white font-bold transition duration-200">
-                  {{ $t('register') }}
-                </router-link>
               </div>
 
               <div>
@@ -67,10 +64,6 @@
                         {{ $t('login') }}
                       </v-button>
                       
-                      <span class="text-gray-400 text-xs">
-                        <span>Don't have any account?</span>
-                        <router-link :to="{ name: 'register' }" class="text-pink-600 hover:underline">{{ $t('register') }}</router-link>
-                      </span>
                       
                       <p class="mt-16 text-xs text-gray-400">
                         <router-link :to="{ name: 'password.request' }" class="hover:text-gray-500">

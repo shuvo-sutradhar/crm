@@ -30,6 +30,7 @@ class AttandanceResource extends JsonResource
             'attandance_type'       => $this->attandance_type,
             'status'                => $this->status,
             'created_at'            => $this->created_at,
+            'attandance_for'        => $this->attandance_for,
         ];
     }
 
@@ -49,18 +50,18 @@ class AttandanceResource extends JsonResource
             
             return $hours . ':' . $minutes;
         } else {
-            return '----';
+            return null;
         }
     }
 
 
     public function punchedOut() {
         if($this->punched_in && $this->punched_out == null) {
-            return 'Not yet';
+            return null;
         } else if($this->punched_in && $this->punched_out) {
             return $this->punched_out;
         } else{
-            return '-----';
+            return null;
         }
     }
 

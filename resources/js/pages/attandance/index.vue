@@ -4,12 +4,37 @@
         <!-- page-heading-start -->
         <div class="flex justify-between mb-6 items-center">
           <div class="mb-0 md:mb-6 lg:mb-0">
-            <h1 class="page-heading">{{ $t('Attandance history') }}</h1>
+            <button @click="filter = !filter" class="button-primary bg-white text-gray-700 font-bold mr-2">
+              <icon name="filter" classList="text-gray-600 w-5 h-5 mr-1" />
+            </button>
+            <form v-if="filter" class="mr-2 flex items-center justify-center">
+              <div>
+                <label>Select a user</label>
+                <select @change="submitsearch" v-model="form.user" class="input-field">
+                    <option value="" disabled selected>Select a user</option>
+                    <option v-for="(data, index) in allUsers" :key="index" :value="data.id">{{ data.name }}</option>
+                </select>
+              </div>
+
+              <div class="mx-2">
+                <label>Form</label>
+                <input @change="submitsearch" v-model="form.form" type="date" placeholder="from" class="input-field mr-1" />
+              </div>
+
+              <div>
+                <label>To</label>
+                <input @change="submitsearch" v-model="form.to" type="date" placeholder="from" class="input-field mr-1" />
+              </div>
+            </form>
           </div>
-          <button @click="open('manualAttandance')" class="button-primary bg-indigo-500 text-white font-bold">
-            <icon name="finger-print" classList="text-white w-6 h-6 mr-1" />
-            Manual Punch
-          </button>
+
+          <div class="flex items-center justify-center">
+
+            <button @click="open('manualAttandance')" class="button-primary bg-indigo-500 text-white font-bold">
+              <icon name="finger-print" classList="text-white w-4 h-6 mr-1" />
+              Manual Punch
+            </button>
+          </div>
         </div>
         <!-- page-heading-End -->
 
@@ -28,6 +53,7 @@
                             <th class="tr">{{ $t('Type') }}</th>                   
                             <th class="tr">{{ $t('Total Hours') }}</th>                   
                             <th class="tr">{{ $t('status') }}</th>                   
+                            <th class="tr">{{ $t('action') }}</th>                   
                         </tr>
                     </thead>
                 
@@ -45,7 +71,7 @@
                                 </router-link>
                             </td>
                             <td class="td">
-                              {{ data.created_at | moment('MMMM Do YYYY') }}
+                              {{ data.attandance_for | moment('MMMM Do YYYY') }}
                             </td>
                             <td class="td">
                               <div v-if="data.status == 'present'">
@@ -63,9 +89,12 @@
                             <td class="td">
                               <div v-if="data.status == 'present'">
                                 {{ data.punched_out | moment('h:mm A') }}
-                                <div v-if="data.punched_out !== 'Not yet'">
+                                <div v-if="data.punched_out">
                                   <span v-if="data.punched_out_status == 'early'" class="text-red-500 px-4 py-1 text-sm rounded-xl inline-block">Leave Early</span>
                                   <span v-else class="text-indigo-500 px-4 py-1 text-sm rounded-xl mt-2 inline-block">On time</span>
+                                </div>
+                                <div v-else>
+                                  At office now
                                 </div>
                               </div>
                               <div v-else>
@@ -76,11 +105,43 @@
                               {{ data.attandance_type }}
                             </td>
                             <td class="td">
-                              {{ data.total_hours }}
+                              <div v-if="data.total_hours">
+                                {{ data.total_hours }}
+                              </div>
+                              <div v-else>
+                                ----
+                              </div>
                             </td>
                             <td class="td">
-                             <span v-if="data.status == 'present'" class="bg-indigo-200 text-indigo-500 text-sm rounded-full px-4 py-1"> Present </span>
-                             <span v-else class="bg-red-200 text-red-500 text-sm rounded-full px-4 py-1"> Absent </span>
+                              <span v-if="data.status == 'absent'" class="bg-red-200 text-red-500 text-sm rounded-full px-4 py-1"> Absent </span>
+                              <span v-else-if="data.status == 'onleave'" class="bg-yellow-100 text-yellow-600 text-sm rounded-full px-4 py-1"> On leave </span>
+                              <span v-else class="bg-indigo-200 text-indigo-500 text-sm rounded-full px-4 py-1"> Present </span>
+                            </td>
+                            <td class="td">
+                              <base-dropdown tag="div" class="md:relative animated py-1 md:py-0">
+                                  <button slot="title" class="w-8 h-8 text-gray-500 rounded-full bg-yellow-200 text-center border border-yellow-400">
+                                      <icon name="dot" classList="text-gray-700 m-auto" />
+                                  </button>
+                                  <template>
+                                      <div class="action-subitem">
+
+                                          <!-- item -->
+                                          <a @click="open('manualAttandanceEdit', data)" class="cursor-pointer action-btn-item border-b border-gray-100 dark:border-gray-700">
+                                              <icon name="edit" classList="text-gray-500 mr-1" />
+                                              {{ $t('edit') }}
+                                          </a>     
+                                          <!-- end item -->
+
+                                          <!-- item -->
+                                          <a @click="deleteData(data.id)" class="action-btn-item" href="#">
+                                              <icon name="trash" classList="text-gray-500 mr-1" />
+                                              {{ $t('delete') }}
+                                          </a>     
+                                          <!-- end item -->
+
+                                      </div>
+                                  </template>
+                              </base-dropdown>
                             </td>
                         </tr>
                         <tr v-show="!loading && !attandances.length">
@@ -108,18 +169,21 @@
         <!-- page content end -->
 
         <manual-attandance />
+        <manual-attandance-edit v-if="this.$store.state.attandance.tagId" :data="this.$store.state.attandance.tagId" />
     </div>
 </template>
 
 
 <script>
+import Form from 'vform'
 import { mapGetters } from "vuex"
 import ManualAttandance from '~/components/attandance/manualAttandance'
+import ManualAttandanceEdit from '~/components/attandance/manualAttandanceEdit'
 
 export default {
   layout: 'dashboard',
   middleware: 'auth',
-  components: { ManualAttandance },
+  components: { ManualAttandance, ManualAttandanceEdit },
 
   
   metaInfo () {
@@ -127,23 +191,36 @@ export default {
   },
 
   data: () => ({
-
+    filter: false,
+    form: new Form({
+      user: '',
+      form: '',
+      to: ''
+    }),
   }),
 
   // GET TEAM DATA FROM VUEX-GETTERS
   computed: {
     ...mapGetters('attandance', ['attandances','loading', 'pagination']),
+    ...mapGetters('team', ['allUsers']),
   },
 
   created() {
     this.getData();
+    
+    Fire.$on('AfterDelete',() => {
+        this.getData();
+    });
+    
   },
+
 
   methods: {
 
     getData() {
       this.$store.state.attandance.loading=true;
       this.$store.dispatch("attandance/fetchAttandacne", this.pagination.current_page);
+			this.$store.dispatch("team/fetchAllUser")
     },
 
     // PAGINATION
@@ -153,12 +230,40 @@ export default {
 
 
     // punch in-out modal
-    open(name) {
+    open(name, data=null) {
         this.$store.dispatch("modals/open", name);
-        // if(tag!=null){
-        //     this.$store.state.tag.tagSlug=tag;
-        // }
+        if(data!=null){
+            this.$store.state.attandance.tagId=data;
+        }
     },
+
+
+    // DELETE DATA
+    async deleteData(id) {
+        Swal.fire({
+            icon: 'error',
+            title: this.$t('are_you_sure'),
+            text: this.$t('you_will_not_able_to_return_this'),
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: this.$t('yes_delete_it')
+            }).then((result) => {
+                // Send request to the server
+                if (result.value) {
+                    axios.delete(window.location.origin+'/api/attandance/'+id).then(()=>{
+                        Swal.fire(this.$t('deleted'), this.$t('your_file_has_been_deleted') ,'success' )
+                        Fire.$emit('AfterDelete');
+                    }).catch(()=> {
+                        Swal.fire(this.$t('failed'), this.$t('there_was_something_wrong'), "warning")
+                    });
+                }
+            })
+    },
+
+    async submitsearch(){
+      this.$store.state.attandance.loading=true;
+      this.$store.dispatch("attandance/fetchSearchData", {data: this.form, pagination: this.pagination.current_page});
+    }
 
   },
 

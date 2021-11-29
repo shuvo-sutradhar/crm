@@ -79,8 +79,8 @@ export default {
             await this.form.patch(window.location.origin+'/api/punch-out')
             .then((response)=>{
                 toast.fire({icon: 'success', title: 'Punched out Successfully'})
-                this.$store.dispatch("mydesk/fetchTodaysAttandance");
                 this.form.reset();
+                this.$emit('punchChange');
                 this.close();
             }).catch(()=>{
                 toast.fire({icon: 'error', title: this.$t('opps') + this.$t('something_is_wrong') + ' 😔'})

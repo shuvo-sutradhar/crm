@@ -61,7 +61,7 @@
 import axios from 'axios'
 export default {
   layout: 'dashboard',
-  middleware: 'auth',
+  middleware: ['auth','admin','check-permissions'],
 
   metaInfo () {
     return { title: this.$t('role') }

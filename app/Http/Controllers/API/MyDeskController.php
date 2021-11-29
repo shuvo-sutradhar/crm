@@ -30,7 +30,7 @@ class MyDeskController extends Controller
      */
     public function todaysAttandance()
     {
-        return Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
+        return Attandance::where('user_id', auth()->user()->id)->whereDate('attandance_for', Carbon::today())->first();
     }
 
 
@@ -49,9 +49,10 @@ class MyDeskController extends Controller
         ]);
 
 
-        $todaysAttandance = Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
+        $todaysAttandance = Attandance::where('user_id', auth()->user()->id)->whereDate('attandance_for', Carbon::today())->first();
 
         if(!$todaysAttandance) { 
+
             // save role
             $attandance = Attandance::create([
                 'user_id'           => auth()->user()->id,
@@ -59,10 +60,9 @@ class MyDeskController extends Controller
                 'punched_in_note'   => $request->input('description'),
                 'attandance_type'   => 'auto',
                 'status'            => 'present',
+                'attandance_for'    => Carbon::now(),
             ]);
-
-
-            return $this->responseWithSuccess('Department added successfully', $attandance);
+            return $this->responseWithSuccess('Punched in successfully', $attandance);
         }
 
         return $this->responseWithError('Opps! You are trying with bad request..');
@@ -78,19 +78,41 @@ class MyDeskController extends Controller
     public function punchOut(Request $request)
     {   
     
-        $todayPunchOut = Attandance::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->first();
+        
+
+        $todayPunchOut = Attandance::where('user_id', auth()->user()->id)->whereDate('attandance_for', Carbon::today())->first();
 
 
         $this->validate($request, [
             'description'       =>  'nullable|min:3|max:500',
         ]);
-        $todayPunchOut->punched_out = Carbon::now();
-        $todayPunchOut->punched_out_note = $request->punched_out_note;
-        $todayPunchOut->save();
 
-        return $this->responseWithSuccess('Department added successfully');
+        //if($request->ip() == '103.199.168.9') { 
+            $todayPunchOut->punched_out = Carbon::now();
+            $todayPunchOut->punched_out_note = $request->punched_out_note;
+            $todayPunchOut->save();
+
+            return $this->responseWithSuccess('Punch out successfully');
+        //}
+
+        //return $this->responseWithError('Opps! You are trying with bad request..');
     }
 
 
+    // search 
+    public function search($data) {
+
+        $request = json_decode($data);
+
+        return MyDeskResource::collection(Attandance::where(function($query) use ($request) {
+            $query->whereBetween('attandance_for', [$request->form, Carbon::parse($request->to)->addDays(1)]);
+        })
+        ->where('user_id', auth()->user()->id)
+        ->latest()
+        ->paginate(10));
+
+   
+
+    }
     
 }
